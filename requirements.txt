@@ -1,0 +1,10 @@
+certifi==2025.10.5
+charset-normalizer==3.4.4
+idna==3.11
+normalize_json==0.0.19
+panda==0.3.1
+python-dotenv==1.2.1
+requests==2.32.5
+setuptools==80.9.0
+-e git+ssh://git@github.com/Isrealade/stripe_data_transformer.git@bb38bc5e021387a620362bc150dce57df7f9aefc#egg=strpe_csv_transformer
+urllib3==2.5.0
