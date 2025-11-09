@@ -56,7 +56,8 @@ def fetch_all_charges(stripe_api_key: str) -> list:
             
             logger.info("Fetched %d charges, has_more=%s", len(data["data"]), has_more)
              
-            if has_more: 
+            if has_more:
+                logger.info("Fetching more charges....")
                 starting_after = data["data"][-1]["id"]
  
             

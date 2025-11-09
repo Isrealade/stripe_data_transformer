@@ -30,7 +30,7 @@ def data_transformer(charges: list) -> str:
     filename = "stripe_data.csv"
     df.to_csv(filename, index=False)
     
-    logger.info(f"Saved CSV to {filename}")
+    logger.info(f"Saved CSV to file: {filename}")
     
     return filename
     
