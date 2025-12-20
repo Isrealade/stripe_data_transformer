@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
-from utils.logger import get_logger
-from config import config
+from stripe_data_transformer.utils.logger import get_logger
+from stripe_data_transformer.config import config
 import os
 import boto3
 from botocore.exceptions import ClientError

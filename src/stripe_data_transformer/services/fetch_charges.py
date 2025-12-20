@@ -1,9 +1,9 @@
 import requests 
 import logging
-from utils.logger import get_logger
+from stripe_data_transformer.utils.logger import get_logger
 import os
 import json
-from config import config
+from stripe_data_transformer.config import config
 
 logger = get_logger("main", debug=config.get("debug"))
 
@@ -63,15 +63,19 @@ def fetch_all_charges(stripe_api_key: str) -> list:
             
         except requests.exceptions.JSONDecodeError as e:
             logging.error(f"Couldn't decode into json: {e}")
+            has_more = False  # Break loop on JSON decode error
             
         except requests.exceptions.HTTPError as e:
             logger.error("HTTP error while fetching charges after ID %s: %s", starting_after, e)
+            has_more = False  # Break loop on HTTP error
             
         except requests.exceptions.Timeout as e:
             logging.error(f"The request timed out: {e}")
             print(f"The request timed out: {e}")
+            has_more = False  # Break loop on timeout
             
         except Exception:
             logger.exception("Unexpected error while fetching charges")
+            has_more = False  # Break loop on unexpected error
     
     return charges

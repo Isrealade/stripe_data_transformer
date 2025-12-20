@@ -2,7 +2,7 @@
 name = "strpe_csv_transformer"
 version = "0.1.0"
 description = "A Python application that fetches Stripe data, transforms it, and exports clean CSV reports for analytics, finance, and bookkeeping workflows. "
-authors = [{name="Isreall Adenekan"}]
+authors = [{name="Isreal Adenekan"}]
 dependencies = [
     "requests",
     "pandas",

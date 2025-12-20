@@ -1,9 +1,9 @@
 import logging
-from utils.logger import get_logger
+from stripe_data_transformer.utils.logger import get_logger
 from stripe_data_transformer.services.fetch_charges import fetch_all_charges
 from stripe_data_transformer.services.data_transformer import data_transformer
 from stripe_data_transformer.services.loader import loader_to_warehouse
-from config import config
+from stripe_data_transformer.config import config
 
 
 logger = get_logger("main", debug=config.get("debug"))
