@@ -47,7 +47,7 @@ jobs:
                 extra_args: --results=verified,unknown
 
     sonar-scan:
-        if: github.event_name == "workflow_dispatch"
+        if: github.event_name == 'workflow-dispatch'
         runs-on: ubuntu-latest
         steps:
             - name: Sonar scan
