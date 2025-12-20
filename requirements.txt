@@ -24,6 +24,5 @@ requests==2.32.5
 s3transfer==0.14.0
 setuptools==80.9.0
 six==1.17.0
--e git+ssh://git@github.com/Isrealade/stripe_data_transformer.git@87c8fce282c99263f4346e9223b5b65c562c7013#egg=strpe_csv_transformer
 tzdata==2025.2
 urllib3==2.5.0
