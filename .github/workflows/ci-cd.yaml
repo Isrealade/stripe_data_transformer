@@ -31,8 +31,9 @@ jobs:
                     ${{ runner.os }}-pip-
 
             - name: Install Dependencies
-              if: steps.cache.outputs.cache-hit != true
-              run: pip install -r requirements.txt 
+              if: steps.cache.outputs.cache-hit == 'false'
+              run: |
+                pip install -r requirements.txt 
 
             - name: Integration test
               run: |
