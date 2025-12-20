@@ -42,6 +42,9 @@ jobs:
     secret-scan:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout Code 
+              uses: actions/checkout@v4
+
             - name: Secret scan
               uses: trufflesecurity/trufflehog@main
               with:
@@ -51,6 +54,9 @@ jobs:
         if: github.event_name == 'workflow-dispatch'
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout Code 
+              uses: actions/checkout@v4
+              
             - name: Sonar scan
               uses: SonarSource/sonarqube-scan-action@v6
               env:
