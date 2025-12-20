@@ -4,6 +4,13 @@ import os
 from unittest.mock import Mock, MagicMock
 from datetime import datetime
 
+# Set up environment variables before any imports that might use them
+# This ensures config.py can access STRIPE_API_KEY when imported
+if "STRIPE_API_KEY" not in os.environ:
+    os.environ["STRIPE_API_KEY"] = "sk_test_1234567890abcdef"
+if "DEBUG" not in os.environ:
+    os.environ["DEBUG"] = "false"
+
 
 @pytest.fixture
 def mock_stripe_api_key():
@@ -101,6 +108,16 @@ def temp_csv_file(tmp_path):
     csv_file = tmp_path / "test_stripe_data.csv"
     csv_file.write_text("Transaction ID,Amount ($),Currency,Date,Status\nch_1,10.00,usd,2021-01-01,Succeeded\n")
     return str(csv_file)
+
+
+@pytest.fixture(autouse=True)
+def setup_test_env(monkeypatch):
+    """Automatically set up mock environment variables for all tests."""
+    # Set up environment variables before any imports that might use them
+    monkeypatch.setenv("STRIPE_API_KEY", "sk_test_1234567890abcdef")
+    monkeypatch.setenv("DEBUG", "false")
+    # BUCKET_NAME is optional, so we don't set it by default
+    # Individual tests can override it if needed
 
 
 @pytest.fixture(autouse=True)
