@@ -1,0 +1,64 @@
+name: Stripe Data Transformer Pipeline
+
+on: 
+    push:
+        branches: 
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code 
+              uses: actions/checkout@v4
+
+            - name: Set up Python Environment
+              uses: actions/setup-python@v6
+              with:
+                python-version: '3.13'
+
+            - name: Cache Dependencies
+              id: cache
+              uses: actions/cache@v4
+              with:
+                path: ~/.cache/pip
+                key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+                restore-keys: |
+                    ${{ runner.os }}-pip-
+
+            - name: Install Dependencies
+              if: steps.cache.outputs.cache-hit != true
+              run: pip install -r requirements.txt 
+
+            - name: Integration test
+              run: |
+                pytest
+
+    secret-scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Secret scan
+              uses: trufflesecurity/trufflehog@main
+              with:
+                extra_args: --results=verified,unknown
+
+    sonar-scan:
+        if: github.event_name == "workflow_dispatch"
+        runs-on: ubuntu-latest
+        steps:
+            - name: Sonar scan
+              uses: SonarSource/sonarqube-scan-action@v6
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+            - name: SonarQube Quality Gate check
+              id: sonarqube-quality-gate-check
+              uses: sonarsource/sonarqube-quality-gate-action@master
+              with:
+                pollingTimeoutSec: 600
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
